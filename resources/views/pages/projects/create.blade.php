@@ -45,6 +45,25 @@
             </div>
         
             <div class="mb-3">
+                <label for="type_id" class="form-label">Type</label>
+                <select class="form-select form-select-lg 
+
+                @error('type_id') is_invalid @enderror" 
+                
+                name="type_id" id="type_id">
+                    <option selected value="">Seleziona</option>
+                    
+                    @foreach ($types as $item)
+                        <option value="{{$item->id}}"
+                            {{$item->id==old('type_id')?'selected':''}}>
+                            {{$item->name}}
+                        </option>
+                    @endforeach
+
+                </select>
+            </div>
+
+            <div class="mb-3">
                 <label for="descriptions" class="form-label">Description</label>
                 <textarea 
                     class="form-control 

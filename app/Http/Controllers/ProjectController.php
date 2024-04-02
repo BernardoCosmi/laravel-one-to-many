@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
@@ -24,7 +25,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('pages.projects.create');
+
+        $types = Type::all();
+
+        return view('pages.projects.create', compact('types'));
     }
 
     /**
@@ -37,8 +41,8 @@ class ProjectController extends Controller
 
         
         $slug = Project::generateSlug($request->title);
-
         $val_data['slug'] = $slug;
+        
         $val_data['descriptions'] = $request->input('descriptions');
         $val_data['languages'] = $request->input('languages');
 
@@ -48,9 +52,11 @@ class ProjectController extends Controller
             $val_data['thumb'] = $img_path;
         }
 
+        // dd($val_data);
         // $val_data['thumb'] = $request->input('thumb');
 
         $new_project = Project::create($val_data);
+
         return redirect()->route('dashboardprojects.index');
     }
 
@@ -67,9 +73,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-
+        $types = Type::all();
         
-        return view('pages.projects.edit', compact('project'));
+        return view('pages.projects.edit', compact('project', 'types'));
     }
 
     /**
