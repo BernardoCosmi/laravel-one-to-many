@@ -28,7 +28,7 @@ class UpdateProjectRequest extends FormRequest
             Rule::unique('projects')->ignore($this->project)
 
            ],
-           'content' => ['nullable']
+           'descriptions' => ['nullable']
         ];
     }
 }
